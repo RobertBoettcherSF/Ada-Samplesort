@@ -28,14 +28,16 @@ package body Sample_Sort is
             Right := Right - 1;
          end loop;
 
+         if Left <= Right then
+            Temp := Data(Left);
+            Data(Left) := Data(Right);
+            Data(Right) := Temp;
+            
+            Left := Left + 1;
+            Right := Right - 1;
+         end if;
+
          exit when Left > Right;
-
-         Temp := Data(Left);
-         Data(Left) := Data(Right);
-         Data(Right) := Temp;
-
-         Left := Left + 1;
-         Right := Right - 1;
       end loop;
 
       if Data'First < Right then
@@ -62,7 +64,7 @@ package body Sample_Sort is
    ---------------------------------------------------------------------------
    -- Variant 1: Sequential Sample Sort
    ---------------------------------------------------------------------------
-   procedure Sequential_Sample_Sort (Data : in out Data_Array; Num_Buckets : Positive) is
+   procedure Sequential_Sample_Sort (Data : in out Data_Array; Num_Buckets : Integer) is
    begin
       if Num_Buckets < 1 then
          raise Invalid_Bucket_Count;
@@ -131,7 +133,7 @@ package body Sample_Sort is
    ---------------------------------------------------------------------------
    -- Variant 2: Parallel Sample Sort (Task-Based Shared Memory)
    ---------------------------------------------------------------------------
-   procedure Parallel_Sample_Sort (Data : in out Data_Array; Num_Buckets : Positive) is
+   procedure Parallel_Sample_Sort (Data : in out Data_Array; Num_Buckets : Integer) is
    begin
       if Num_Buckets < 1 then
          raise Invalid_Bucket_Count;
@@ -226,7 +228,7 @@ package body Sample_Sort is
    ---------------------------------------------------------------------------
    -- Variant 3: Oversampling Sample Sort
    ---------------------------------------------------------------------------
-   procedure Oversampling_Sample_Sort (Data : in out Data_Array; Num_Buckets : Positive; Oversample_Factor : Positive) is
+   procedure Oversampling_Sample_Sort (Data : in out Data_Array; Num_Buckets : Integer; Oversample_Factor : Integer) is
    begin
       if Num_Buckets < 1 then
          raise Invalid_Bucket_Count;
